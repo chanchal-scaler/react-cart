@@ -176,11 +176,11 @@ body {
   .product-rating__count {
     margin-left: 0;
   }
-  .product-card {
+  .produc .product-card {
     display: flex;
     flex-direction: column;
   }
-  .product-card__description.product-description {
+  .produc .product-card__description.product-description {
     width: 100%;
   }
 }/*# sourceMappingURL=style.css.map */

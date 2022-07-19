@@ -213,7 +213,7 @@ body {
     }
   }
 
-  .product-card {
+  .produc .product-card {
     @include flex-col();
 
     &__description.product-description {
