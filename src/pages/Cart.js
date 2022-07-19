@@ -1,6 +1,8 @@
 import { ProductCard } from "../components";
+import { useParams } from "react-router-dom";
 
-const Cart = ({ category, carts, setCarts, setPage }) => {
+const Cart = ({ carts, setCarts }) => {
+  const { category } = useParams();
   return (
     <div className="cart">
       {carts[category]?.length
@@ -10,7 +12,6 @@ const Cart = ({ category, carts, setCarts, setPage }) => {
               key={key}
               carts={carts}
               setCarts={setCarts}
-              setPage={setPage}
             />
           ))
         : "Nothing here Yet!"}

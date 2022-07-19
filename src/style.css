@@ -32,6 +32,8 @@ body {
   margin: 1rem;
   font-size: 1rem;
   cursor: pointer;
+  color: #e9c46a;
+  text-decoration: none;
   transition: transform 0.1s linear;
 }
 .nav__link:hover, .nav__btn:hover {
@@ -48,14 +50,16 @@ body {
 }
 
 .products,
-.cart {
+.cart,
+.product {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-evenly;
 }
 
-.products__product-card {
+.products__product-card,
+.product__product-card {
   width: 28rem;
   margin: 1rem;
   display: flex;
@@ -65,14 +69,32 @@ body {
   background-color: #fff;
   box-shadow: -0.1rem -0.1rem 1.5rem rgba(160, 160, 160, 0.431372549);
 }
-.products__product-card > img {
+.products__product-card > img,
+.product__product-card > img {
   width: 10rem;
   height: auto;
   padding: 1rem;
   -o-object-fit: contain;
      object-fit: contain;
 }
-.products__product-card > div {
+.products__product-card > div,
+.product__product-card > div {
+  height: 100%;
+  padding: 1rem;
+  flex: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-sizing: border-box;
+}
+
+.product__product-card {
+  width: 50rem;
+}
+.product__product-card > img {
+  width: 20rem;
+}
+.product__product-card > div {
   height: 100%;
   padding: 1rem;
   flex: 50%;
@@ -90,6 +112,7 @@ body {
   text-align: justify;
   font-size: 0.9rem;
   font-weight: 500;
+  color: #264653;
 }
 .product-description__description {
   height: 5rem;
@@ -128,6 +151,18 @@ body {
   color: grey;
 }
 
+.product .product-description__title {
+  font-size: 1.2rem;
+}
+.product .product-description__description {
+  height: 100%;
+  font-size: 1rem;
+  padding: 0.5rem 0;
+}
+.product .product-description .product-rating {
+  padding: 1rem 0;
+}
+
 @media screen and (max-width: 800px) {
   .nav {
     display: flex;
@@ -140,5 +175,12 @@ body {
   }
   .product-rating__count {
     margin-left: 0;
+  }
+  .product-card {
+    display: flex;
+    flex-direction: column;
+  }
+  .product-card__description.product-description {
+    width: 100%;
   }
 }/*# sourceMappingURL=style.css.map */

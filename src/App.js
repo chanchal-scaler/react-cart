@@ -1,37 +1,30 @@
 import { useState } from "react";
 import { Navbar } from "./components";
-import { Cart, Products } from "./pages";
+import { Cart, Products, Product } from "./pages";
 import { pages } from "./utils";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 const App = () => {
-  const [page, setPage] = useState(pages.PRODUCTS);
-  const [category, setCategory] = useState("");
   const [carts, setCarts] = useState({});
 
   return (
-    <div className="App">
-      <Navbar
-        page={page}
-        setPage={setPage}
-        category={category}
-        setCategory={setCategory}
-      />
-      {page === pages.PRODUCTS ? (
-        <Products
-          category={category}
-          setCarts={setCarts}
-          carts={carts}
-          setPage={setPage}
+    <BrowserRouter>
+      <Navbar />
+      <Routes>
+        <Route
+          path={`/${pages.PRODUCTS}/:category`}
+          element={<Products setCarts={setCarts} carts={carts} />}
         />
-      ) : (
-        <Cart
-          category={category}
-          carts={carts}
-          setCarts={setCarts}
-          setPage={setPage}
+        <Route
+          path={`/${pages.PRODUCTS}/:category/:id`}
+          element={<Product setCarts={setCarts} carts={carts} />}
         />
-      )}
-    </div>
+        <Route
+          path={`/${pages.CART}/:category`}
+          element={<Cart carts={carts} setCarts={setCarts} />}
+        />
+      </Routes>
+    </BrowserRouter>
   );
 };
 

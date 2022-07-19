@@ -1,8 +1,11 @@
 import { useCallback, useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import { pages } from "../utils";
 
-const ProductCard = ({ product, carts, setCarts, setPage }) => {
-  const { title, price, description, image, rating, category } = product;
+const ProductCard = ({ product, carts, setCarts }) => {
+  const { id, title, price, description, image, rating, category } = product;
+
+  const navigate = useNavigate();
 
   const [describe, setDescribe] = useState(false);
 
@@ -11,22 +14,23 @@ const ProductCard = ({ product, carts, setCarts, setPage }) => {
     if (!newCart[category]) newCart[category] = [];
     newCart[category].push(product);
     setCarts(newCart);
-    setPage(pages.CART);
-  }, [carts, category, product, setCarts, setPage]);
+    navigate(`/${pages.CART}/${category}`);
+  }, [carts, category, product, setCarts, navigate]);
 
   const removeFromCart = useCallback(() => {
     let newCart = { ...carts };
     const i = newCart[category]?.map((item) => item.id).indexOf(product?.id);
     if (i !== -1) newCart[category].splice(i, 1);
     setCarts(newCart);
-    setPage(pages.CART);
-  }, [carts, category, product, setCarts, setPage]);
+  }, [carts, category, product, setCarts]);
 
   return (
     <div className="products__product-card product-card">
       <img src={image} alt={title} />
       <div className="product-card__description product-description">
-        <span className="product-description__title">{title}</span>
+        <Link to={`/products/${category}/${id}`}>
+          <span className="product-description__title">{title}</span>
+        </Link>
         <div
           className={`product-description__description ${
             describe ? "product-description__description--more" : ""

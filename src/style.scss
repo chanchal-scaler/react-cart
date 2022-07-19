@@ -55,6 +55,8 @@ body {
     margin: 1rem;
     font-size: 1rem;
     cursor: pointer;
+    color: $nav-text-color;
+    text-decoration: none;
     @include transition(transform, 0.1s, linear);
   }
 
@@ -77,13 +79,15 @@ body {
 }
 
 .products,
-.cart {
+.cart,
+.product {
   @include flex-row();
   flex-wrap: wrap;
   justify-content: space-evenly;
 }
 
-.products__product-card {
+.products__product-card,
+.product__product-card {
   width: 28rem;
   margin: 1rem;
   @include flex-row();
@@ -109,6 +113,23 @@ body {
   }
 }
 
+.product__product-card {
+  width: 50rem;
+
+  > img {
+    width: 20rem;
+  }
+
+  > div {
+    height: 100%;
+    padding: 1rem;
+    flex: 50%;
+    @include flex-col();
+    justify-content: space-between;
+    box-sizing: border-box;
+  }
+}
+
 .product-description {
   width: 50%;
   position: relative;
@@ -117,6 +138,7 @@ body {
     text-align: justify;
     font-size: 0.9rem;
     font-weight: 500;
+    color: $nav-bg-color;
   }
 
   &__description {
@@ -162,6 +184,22 @@ body {
   }
 }
 
+.product .product-description {
+  &__title {
+    font-size: 1.2rem;
+  }
+
+  &__description {
+    height: 100%;
+    font-size: 1rem;
+    padding: 0.5rem 0;
+  }
+
+  .product-rating {
+    padding: 1rem 0;
+  }
+}
+
 @media screen and (max-width: 800px) {
   .nav {
     @include flex-col();
@@ -172,6 +210,14 @@ body {
     @include flex-col();
     &__count {
       margin-left: 0;
+    }
+  }
+
+  .product-card {
+    @include flex-col();
+
+    &__description.product-description {
+      width: 100%;
     }
   }
 }

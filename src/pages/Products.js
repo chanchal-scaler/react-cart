@@ -1,10 +1,12 @@
 import { useEffect, useState, useCallback } from "react";
+import { useParams } from "react-router-dom";
 import { ProductCard } from "../components";
 import { getData } from "../utils";
 
-const Products = ({ category, carts, setCarts, setPage }) => {
+const Products = ({ carts, setCarts }) => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const { category } = useParams();
 
   const fetchProducts = useCallback(async () => {
     setLoading(true);
@@ -29,7 +31,6 @@ const Products = ({ category, carts, setCarts, setPage }) => {
               product={product}
               carts={carts}
               setCarts={setCarts}
-              setPage={setPage}
             />
           ))}
     </div>

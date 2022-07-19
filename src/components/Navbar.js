@@ -1,8 +1,11 @@
 import { useState, useEffect } from "react";
+import { useNavigate, NavLink, Link, useLocation } from "react-router-dom";
 import { getData, pages } from "../utils";
 
-const Navbar = ({ page, setPage, setCategory, category }) => {
+const Navbar = () => {
   const [categories, setCategories] = useState([]);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const fetchCategores = async () => {
@@ -10,33 +13,39 @@ const Navbar = ({ page, setPage, setCategory, category }) => {
         "https://fakestoreapi.com/products/categories"
       );
       setCategories(data);
-      setCategory(data[0]);
+      if (location.pathname === "/") navigate(`/${pages.PRODUCTS}/${data[0]}`);
     };
     fetchCategores();
-  }, [setCategory]);
+  }, [location.pathname]);
 
   return (
     <div className="nav">
       <span className="nav__title">React Cart</span>
-      {page === pages.PRODUCTS ? (
-        <span className="nav__btn" onClick={() => setPage(pages.CART)}>
-          Cart
-        </span>
-      ) : (
-        <span className="nav__btn" onClick={() => setPage(pages.PRODUCTS)}>
-          Products
-        </span>
-      )}
-      {categories.map((categori, key) => (
-        <span
-          key={key}
-          className={`nav__link ${
-            category === categori ? "nav__link--active" : ""
-          }`}
-          onClick={() => setCategory(categori)}
+      {location.pathname.split("/")[1] === pages.PRODUCTS ? (
+        <Link
+          className="nav__btn"
+          to={`/${pages.CART}/${location.pathname.split("/")[2]}`}
         >
-          {categori}
-        </span>
+          Cart
+        </Link>
+      ) : (
+        <Link
+          className="nav__btn"
+          to={`/${pages.PRODUCTS}/${location.pathname.split("/")[2]}`}
+        >
+          Products
+        </Link>
+      )}
+      {categories.map((category, key) => (
+        <NavLink
+          key={key}
+          className={({ isActive }) =>
+            `nav__link ${isActive ? "nav__link--active" : ""}`
+          }
+          to={`/${location.pathname.split("/")[1]}/${category}`}
+        >
+          {category}
+        </NavLink>
       ))}
     </div>
   );

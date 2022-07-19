@@ -12,8 +12,9 @@ const getData = async (url) => {
 };
 
 const pages = {
-  PRODUCTS: "PRODUCTS",
-  CART: "CART",
+  PRODUCTS: "products",
+  PRODUCT: "product",
+  CART: "cart",
 };
 
 export { getData, pages };
