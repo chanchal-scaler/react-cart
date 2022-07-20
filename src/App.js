@@ -4,7 +4,7 @@ import { Cart, Products, Product } from "./pages";
 import { pages } from "./utils";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-const App = () => {
+function App() {
   const [carts, setCarts] = useState({});
 
   return (
@@ -26,6 +26,6 @@ const App = () => {
       </Routes>
     </BrowserRouter>
   );
-};
+}
 
 export default App;

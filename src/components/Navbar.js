@@ -1,22 +1,21 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useNavigate, NavLink, Link, useLocation } from "react-router-dom";
-import { getData, pages } from "../utils";
+import { getCategories, pages } from "../utils";
 
-const Navbar = () => {
+function Navbar() {
   const [categories, setCategories] = useState([]);
   const navigate = useNavigate();
   const location = useLocation();
 
-  useEffect(() => {
-    const fetchCategores = async () => {
-      const data = await getData(
-        "https://fakestoreapi.com/products/categories"
-      );
-      setCategories(data);
-      if (location.pathname === "/") navigate(`/${pages.PRODUCTS}/${data[0]}`);
-    };
-    fetchCategores();
+  const fetchCategories = useCallback(async () => {
+    const data = await getCategories();
+    setCategories(data);
+    if (location.pathname === "/") navigate(`/${pages.PRODUCTS}/${data[0]}`);
   }, [location.pathname]);
+
+  useEffect(() => {
+    fetchCategories();
+  }, [fetchCategories]);
 
   return (
     <div className="nav">
@@ -49,6 +48,6 @@ const Navbar = () => {
       ))}
     </div>
   );
-};
+}
 
 export default Navbar;
