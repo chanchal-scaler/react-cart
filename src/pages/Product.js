@@ -1,16 +1,21 @@
 import { useEffect, useState, useCallback } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { getData, pages } from "../utils";
+import { getProductById, pages } from "../utils";
 
 const Products = ({ carts, setCarts }) => {
   const [product, setProduct] = useState({});
   const [loading, setLoading] = useState(true);
   const { id } = useParams();
   const navigate = useNavigate();
+  const isProductInCart = (carts[product.category] ?? []).filter(
+    (item) => item.id === product.id
+  ).length;
 
   const addToCart = useCallback(() => {
     let newCart = { ...carts };
-    if (!newCart[product.category]) newCart[product.category] = [];
+    if (!newCart[product.category]) {
+      newCart[product.category] = [];
+    }
     newCart[product.category].push(product);
     setCarts(newCart);
     navigate(`/${pages.CART}/${product.category}`);
@@ -18,16 +23,16 @@ const Products = ({ carts, setCarts }) => {
 
   const removeFromCart = useCallback(() => {
     let newCart = { ...carts };
-    const i = newCart[product.category]
+    const index = newCart[product.category]
       ?.map((item) => item.id)
       .indexOf(product?.id);
-    if (i !== -1) newCart[product.category].splice(i, 1);
+    if (index !== -1) newCart[product.category].splice(index, 1);
     setCarts(newCart);
   }, [carts, product, setCarts]);
 
   const fetchProduct = useCallback(async () => {
     setLoading(true);
-    const data = await getData(`https://fakestoreapi.com/products/${id}`);
+    const data = await getProductById(id);
     setProduct(data);
     setLoading(false);
   }, [id]);
@@ -63,16 +68,15 @@ const Products = ({ carts, setCarts }) => {
               <span className="product-description__price">
                 &#65284; {product.price}
               </span>
-              {(carts[product.category] ?? []).filter(
-                (item) => item.id === product.id
-              ).length ? (
+              {isProductInCart && (
                 <button
                   className="product-description__remove-btn"
                   onClick={removeFromCart}
                 >
                   Remove
                 </button>
-              ) : (
+              )}
+              {!isProductInCart && (
                 <button
                   className="product-description__add-btn"
                   onClick={addToCart}

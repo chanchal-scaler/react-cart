@@ -2,8 +2,8 @@ import { ProductCard } from "../components";
 import { useParams } from "react-router-dom";
 
 function Cart({ carts, setCarts }) {
-  const cartHasData = carts[category]?.length;
   const { category } = useParams();
+  const cartHasData = carts[category]?.length;
 
   return (
     <div className="cart">

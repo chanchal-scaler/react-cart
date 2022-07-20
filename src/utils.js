@@ -14,6 +14,19 @@ const getProductsData = async (category) => {
   }
 };
 
+const getProductById = async (id) => {
+  try {
+    const res = await fetch(`https://fakestoreapi.com/products/${id}`, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    });
+
+    return await res.json();
+  } catch (error) {
+    console.log("Something went wrong!");
+  }
+};
+
 const getCategories = async () => {
   try {
     const res = await fetch("https://fakestoreapi.com/products/categories", {
@@ -33,4 +46,4 @@ const pages = {
   CART: "cart",
 };
 
-export { getProductsData, getCategories, pages };
+export { getProductById, getProductsData, getCategories, pages };

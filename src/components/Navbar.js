@@ -6,6 +6,9 @@ function Navbar() {
   const [categories, setCategories] = useState([]);
   const navigate = useNavigate();
   const location = useLocation();
+  const isProductPage = location.pathname.split("/")[1] === pages.PRODUCTS;
+  const category = location.pathname.split("/")[2].replace("%20", " ");
+  const page = location.pathname.split("/")[1];
 
   const fetchCategories = useCallback(async () => {
     const data = await getCategories();
@@ -20,30 +23,23 @@ function Navbar() {
   return (
     <div className="nav">
       <span className="nav__title">React Cart</span>
-      {location.pathname.split("/")[1] === pages.PRODUCTS ? (
-        <Link
-          className="nav__btn"
-          to={`/${pages.CART}/${location.pathname.split("/")[2]}`}
-        >
+      {isProductPage && (
+        <Link className="nav__btn" to={`/${pages.CART}/${category}`}>
           Cart
         </Link>
-      ) : (
-        <Link
-          className="nav__btn"
-          to={`/${pages.PRODUCTS}/${location.pathname.split("/")[2]}`}
-        >
+      )}
+      {!isProductPage && (
+        <Link className="nav__btn" to={`/${pages.PRODUCTS}/${category}`}>
           Products
         </Link>
       )}
-      {categories.map((category, key) => (
+      {categories.map((item, key) => (
         <NavLink
           key={key}
-          className={({ isActive }) =>
-            `nav__link ${isActive ? "nav__link--active" : ""}`
-          }
-          to={`/${location.pathname.split("/")[1]}/${category}`}
+          className={`nav__link ${item === category && "nav__link--active"}`}
+          to={`/${page}/${item}`}
         >
-          {category}
+          {item}
         </NavLink>
       ))}
     </div>
