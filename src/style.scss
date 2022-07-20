@@ -1,0 +1,223 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap");
+
+$nav-bg-color: #264653;
+$nav-text-color: #e9c46a;
+$muted-text-color: grey;
+$box-shadow-color: #a0a0a06e;
+$white: #fff;
+
+@mixin flex-col {
+  display: flex;
+  flex-direction: column;
+}
+
+@mixin flex-row {
+  display: flex;
+  flex-direction: row;
+}
+
+@mixin transition($property, $time, $timingFunction) {
+  -webkit-transition: $property $time $timingFunction;
+  -moz-transition: $property $time $timingFunction;
+  -ms-transition: $property $time $timingFunction;
+  -o-transition: $property $time $timingFunction;
+  transition: $property $time $timingFunction;
+}
+
+body::-webkit-scrollbar {
+  display: none;
+}
+
+body {
+  margin: 0;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  font-family: "Poppins", sans-serif;
+}
+
+.nav {
+  @include flex-row();
+  margin-bottom: 2rem;
+  align-items: center;
+  text-transform: capitalize;
+  background-color: $nav-bg-color;
+  color: $nav-text-color;
+
+  &__title {
+    margin-right: auto;
+    margin-left: 1rem;
+    font-size: 2rem;
+    user-select: none;
+  }
+
+  &__link,
+  &__btn {
+    margin: 1rem;
+    font-size: 1rem;
+    cursor: pointer;
+    color: $nav-text-color;
+    text-decoration: none;
+    @include transition(transform, 0.1s, linear);
+  }
+
+  &__link:hover,
+  &__btn:hover {
+    transform: translateY(0.1rem);
+  }
+
+  &__link--active {
+    text-decoration: overline;
+  }
+
+  &__link--active:hover {
+    transform: translateY(0);
+  }
+
+  &__btn {
+    font-weight: bold;
+  }
+}
+
+.products,
+.cart,
+.product {
+  @include flex-row();
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+
+.products__product-card,
+.product__product-card {
+  width: 28rem;
+  margin: 1rem;
+  @include flex-row();
+  justify-content: space-between;
+  border-radius: 0.5rem;
+  background-color: $white;
+  box-shadow: -0.1rem -0.1rem 1.5rem $box-shadow-color;
+
+  > img {
+    width: 10rem;
+    height: auto;
+    padding: 1rem;
+    object-fit: contain;
+  }
+
+  > div {
+    height: 100%;
+    padding: 1rem;
+    flex: 50%;
+    @include flex-col();
+    justify-content: space-between;
+    box-sizing: border-box;
+  }
+}
+
+.product__product-card {
+  width: 50rem;
+
+  > img {
+    width: 20rem;
+  }
+
+  > div {
+    height: 100%;
+    padding: 1rem;
+    flex: 50%;
+    @include flex-col();
+    justify-content: space-between;
+    box-sizing: border-box;
+  }
+}
+
+.product-description {
+  width: 50%;
+  position: relative;
+
+  &__title {
+    text-align: justify;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: $nav-bg-color;
+  }
+
+  &__description {
+    height: 5rem;
+    overflow: hidden;
+    text-align: justify;
+    font-size: 0.8rem;
+  }
+
+  button {
+    border: none;
+    margin-left: 1rem;
+    padding: 0.4rem 1rem;
+    font-size: 1rem;
+    background-color: $nav-bg-color;
+    color: $nav-text-color;
+    border-radius: 0.2rem;
+    cursor: pointer;
+  }
+
+  &__describe {
+    padding: 0.2rem;
+    background-color: $white;
+    color: $nav-bg-color;
+    position: absolute;
+    right: 0.5rem;
+    bottom: 3.8rem;
+    font-size: 0.8rem;
+    cursor: pointer;
+    font-weight: bold;
+  }
+
+  &__description--more {
+    overflow-y: scroll;
+  }
+}
+
+.product-rating {
+  &__count {
+    margin-left: 1rem;
+    font-size: 0.8rem;
+    color: $muted-text-color;
+  }
+}
+
+.product .product-description {
+  &__title {
+    font-size: 1.2rem;
+  }
+
+  &__description {
+    height: 100%;
+    font-size: 1rem;
+    padding: 0.5rem 0;
+  }
+
+  .product-rating {
+    padding: 1rem 0;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .nav {
+    @include flex-col();
+    align-items: baseline;
+  }
+
+  .product-rating {
+    @include flex-col();
+    &__count {
+      margin-left: 0;
+    }
+  }
+
+  .produc .product-card {
+    @include flex-col();
+
+    &__description.product-description {
+      width: 100%;
+    }
+  }
+}
