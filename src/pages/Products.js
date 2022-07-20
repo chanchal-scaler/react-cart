@@ -1,16 +1,14 @@
 import { useEffect, useState, useCallback } from "react";
 import { ProductCard } from "../components";
-import { getData } from "../utils";
+import { getProductsData } from "../utils";
 
-const Products = ({ category, carts, setCarts, setPage }) => {
+function Products({ category, carts, setCarts, setPage }) {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const fetchProducts = useCallback(async () => {
     setLoading(true);
-    const data = await getData(
-      `https://fakestoreapi.com/products/category/${category}`
-    );
+    const data = await getProductsData(category);
     setProducts(data);
     setLoading(false);
   }, [category]);
@@ -21,19 +19,19 @@ const Products = ({ category, carts, setCarts, setPage }) => {
 
   return (
     <div className="products">
-      {loading
-        ? "Loading..."
-        : products?.map((product, key) => (
-            <ProductCard
-              key={key}
-              product={product}
-              carts={carts}
-              setCarts={setCarts}
-              setPage={setPage}
-            />
-          ))}
+      {loading && "Loading..."}
+      {!loading &&
+        products?.map((product, key) => (
+          <ProductCard
+            key={key}
+            product={product}
+            carts={carts}
+            setCarts={setCarts}
+            setPage={setPage}
+          />
+        ))}
     </div>
   );
-};
+}
 
 export default Products;

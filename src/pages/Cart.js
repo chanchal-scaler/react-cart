@@ -1,21 +1,22 @@
 import { ProductCard } from "../components";
 
-const Cart = ({ category, carts, setCarts, setPage }) => {
+function Cart({ category, carts, setCarts, setPage }) {
+  const cartHasData = carts[category]?.length;
   return (
     <div className="cart">
-      {carts[category]?.length
-        ? carts[category].map((product, key) => (
-            <ProductCard
-              product={product}
-              key={key}
-              carts={carts}
-              setCarts={setCarts}
-              setPage={setPage}
-            />
-          ))
-        : "Nothing here Yet!"}
+      {cartHasData &&
+        carts[category].map((product, key) => (
+          <ProductCard
+            product={product}
+            key={key}
+            carts={carts}
+            setCarts={setCarts}
+            setPage={setPage}
+          />
+        ))}
+      {!cartHasData && "Nothing here Yet!"}
     </div>
   );
-};
+}
 
 export default Cart;

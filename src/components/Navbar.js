@@ -1,45 +1,44 @@
-import { useState, useEffect } from "react";
-import { getData, pages } from "../utils";
+import { useState, useEffect, useCallback } from "react";
+import { getCategories, pages } from "../utils";
 
-const Navbar = ({ page, setPage, setCategory, category }) => {
+function Navbar({ page, setPage, setCategory, category }) {
   const [categories, setCategories] = useState([]);
+  const isProductsPage = page === pages.PRODUCTS;
+
+  const fetchCategories = useCallback(async () => {
+    const data = await getCategories();
+    setCategories(data);
+    setCategory(data[0]);
+  }, [setCategory]);
 
   useEffect(() => {
-    const fetchCategores = async () => {
-      const data = await getData(
-        "https://fakestoreapi.com/products/categories"
-      );
-      setCategories(data);
-      setCategory(data[0]);
-    };
-    fetchCategores();
-  }, [setCategory]);
+    fetchCategories();
+  }, [setCategory, fetchCategories]);
 
   return (
     <div className="nav">
       <span className="nav__title">React Cart</span>
-      {page === pages.PRODUCTS ? (
+      {isProductsPage && (
         <span className="nav__btn" onClick={() => setPage(pages.CART)}>
           Cart
         </span>
-      ) : (
+      )}
+      {!isProductsPage && (
         <span className="nav__btn" onClick={() => setPage(pages.PRODUCTS)}>
           Products
         </span>
       )}
-      {categories.map((categori, key) => (
+      {categories.map((item, key) => (
         <span
           key={key}
-          className={`nav__link ${
-            category === categori ? "nav__link--active" : ""
-          }`}
-          onClick={() => setCategory(categori)}
+          className={`nav__link ${category === item && "nav__link--active"}`}
+          onClick={() => setCategory(item)}
         >
-          {categori}
+          {item}
         </span>
       ))}
     </div>
   );
-};
+}
 
 export default Navbar;
